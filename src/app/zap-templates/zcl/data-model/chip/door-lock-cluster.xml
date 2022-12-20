@@ -197,6 +197,8 @@ limitations under the License.
             <access op="read" role="view" />
             <access op="write" role="administer" />
         </attribute>
+        <!-- Unbolt feature - optional -->
+        <attribute side="server" code="72" define="UNBOLTING_SUPPORTED" type="boolean" default="0" writable="false" optional="true">UnboltingSupported</attribute>
 
         <!-- Commands -->
         <command source="client" code="0" name="LockDoor" mustUseTimedInvoke="true">
@@ -399,6 +401,11 @@ limitations under the License.
             <access op="invoke" role="administer" />
             <arg name="credential" type="DlCredential" isNullable="true"/>
         </command>
+        <command source="client" code="39" name="Unbolt" mustUseTimedInvoke="true" optional="true">
+            <description>This command causes the lock device to unlock the door without pulling the latch.</description>
+            <!-- Conformance feature [COTA & PIN] - for now optional -->
+            <arg name="pinCode" type="OCTET_STRING" optional="true" />
+        </command>
 
 
         <!-- Events -->
@@ -535,6 +542,7 @@ limitations under the License.
         <item value="1" name="Unlock" />
         <item value="2" name="NonAccessUserEvent" />
         <item value="3" name="ForcedUserEvent" />
+        <item value="4" name="Unlatch" />
     </enum>
 
     <enum name="DlOperationError" type="ENUM8">
@@ -598,6 +606,7 @@ limitations under the License.
         <item value="0" name="NotFullyLocked" />
         <item value="1" name="Locked" />
         <item value="2" name="Unlocked" />
+        <item value="3" name="Unlatched" />
     </enum>
 
     <!-- LockType Attribute Values -->
@@ -614,6 +623,7 @@ limitations under the License.
         <item value="8" name="InterconnectedLock" />
         <item value="9" name="Dead Latch" />
         <item value="10" name="Door Furniture" />
+        <item value="11" name="Eurocylinder" />
     </enum>
 
     <!-- CredentialRulesSupport attribute bit meaning set -->
